@@ -2,6 +2,7 @@
 <style>
 .dropdown {
   float: left;
+  max-width: 1300px;
 }
 
 .dropdown .dropbtn {
@@ -12,7 +13,6 @@
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
-  margin-top: 15px;
 }
 
 .dropdown:hover .dropbtn {
@@ -45,11 +45,18 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+@media screen and (max-width: 960px){
+  .dropdown .dropbtn {
+    font-size: 1.6rem;
+  }
+}
+
 </style>
 <!--BARRA DE NAVEGACION-->
 <nav class="navbar">
     <div class="navbar-container">
-        <a href="index.html" id="navbar-logo"><img src="images/logocomp.png" alt=""></a> <!--CAMBIAR SAN GABRIEL POR UNA IMAGEN (<i></i>)-->
+        <a href="./index.php" id="navbar-logo"><img src="images/logocomp.png" alt=""></a> <!--CAMBIAR SAN GABRIEL POR UNA IMAGEN (<i></i>)-->
         <div class="navbar-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -68,7 +75,7 @@
             <li class="navbar-item">
                 <a href="novedades.php" class="navbar-links">Novedades</a>
             </li>
-            <li class="navbar-item">
+            <li class="navbar-btn">
                 <?php if (!empty($_SESSION['UserId'])) { ?>
                     <div class="dropdown">
                         <button class="dropbtn">Hola, <?php echo $user_data['nombre'] ?> <i class="fa fa-caret-down"></i> </button>
@@ -78,9 +85,7 @@
                         </div>
                     </div> 
                     <?php } else { ?>
-                        <li class="navbar-btn">
-                            <a href="login.php" class="button">Acceder</a>
-                        </li>
+                      <a href="login.php" class="button">Acceder</a>
                 <?php } ?>
             </li>
         </ul>

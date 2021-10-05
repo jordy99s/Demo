@@ -149,7 +149,7 @@
         transform: translate(5%, 20%);
     }
     .navbar-btn{
-        padding-bottom: 2rem;
+        padding-bottom: 1rem;
     }
     .button{
         display: flex;

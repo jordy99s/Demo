@@ -91,8 +91,8 @@
             </div>
             <button class="btn btn-primary" type="submit">Ingresar</button>
             <button class="btn btn-secondary" type="button" onclick="cancelFunction()">Cancelar</button>
-            <p class="form-text">
-                <a href="#" class="form-link">Olvidé mi Contraseña</a>
+            <p class="form-text form-hidden">
+                <a href="./password-reset.php"  class="form-link">Olvidé mi Contraseña</a>
             </p>
             <p class="form-text">
                 <a class="form-link" href="./signup.php" id="linkCreateAccount">¿No tienes una cuenta? Crear Cuenta</a>
