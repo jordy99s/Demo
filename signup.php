@@ -26,7 +26,7 @@
         if(empty(trim($_POST['correo']))){
             $username_err = "Por favor, ingrese su correo";
         }else{
-            // Prepare a select statement
+            // Preparamos un SELECT
             $sql = "SELECT UserId FROM usuarios WHERE correo = ?";
             
             if($stmt = mysqli_prepare($link, $sql)){
@@ -80,7 +80,7 @@
 		if(!empty($correo) && !empty($pass) && !is_numeric($correo))
 		{
 
-			//save to database
+			//Guardar en la base
 			$query = "insert into usuarios (nombre, apellido, correo, pass) values ('$nombre', '$apellido', '$correo','$pass')";
 
 			mysqli_query($link, $query);
