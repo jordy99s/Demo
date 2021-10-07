@@ -30,15 +30,15 @@
             $sql = "SELECT UserId FROM usuarios WHERE correo = ?";
             
             if($stmt = mysqli_prepare($link, $sql)){
-                // Bind variables to the prepared statement as parameters
+                // Amarramos las variables al prepared statement como parámetros
                 mysqli_stmt_bind_param($stmt, "s", $param_username);
                 
-                // Set parameters
+                // Establecemos los parámetros
                 $param_username = trim($_POST['correo']);
                 
-                // Attempt to execute the prepared statement
+                // Ejecutamos el prepared statement
                 if(mysqli_stmt_execute($stmt)){
-                    /* store result */
+                    /* Almacenamos el resultado */
                     mysqli_stmt_store_result($stmt);
                     
                     if(mysqli_stmt_num_rows($stmt) == 1){
@@ -50,7 +50,7 @@
                     echo "Oops! Something went wrong. Please try again later.";
                 }
 
-                // Close statement
+                // Cerramos el statement
                 mysqli_stmt_close($stmt);
             }
         }
@@ -66,7 +66,7 @@
         
         
         if(empty(trim($_POST["confirm_password"]))){
-            // Validate confirm password
+            // Validamos que se ingresó una contraseña
             $confirm_password_err = "Por favor, confirmar contraseña";
         }else{
             if($_POST['pass'] != $_POST['confirm_password']){
@@ -77,7 +77,7 @@
         }
 
 
-		if(!empty($correo) && !empty($pass) && !is_numeric($correo))
+		if(!empty($correo) && !empty($pass) && !empty($nombre) && !empty($apellido) && !empty($confirm_password))
 		{
 
 			//Guardar en la base

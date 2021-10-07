@@ -23,10 +23,10 @@
             $pass = $_POST['pass'];
         }
 
-		if(!empty($correo) && !empty($pass) && !is_numeric($correo))
+		if(!empty($correo) && !empty($pass))
 		{
 
-			//read from database
+			//Verificamos desde la bd
 			$query = "select * from usuarios where correo = '$correo'";
 			$result = mysqli_query($link, $query);
 
@@ -44,10 +44,10 @@
 						header("Location: index.php");
 						die;
 					}else{
-                        $login_err = "Correo/Contraseña Incorrectos";
+                        $login_err = "Contraseña Incorrecta";
                     }
 				}else{
-                    $login_err = "No encontrado";
+                    $login_err = "Correo No Encontrado";
                 }
 			}
 		}else
@@ -65,7 +65,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
-    
     <title>Login</title>
     <style>
         <?php include "main.css" ?>
