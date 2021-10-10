@@ -9,7 +9,7 @@ if(isset($_SESSION['UserId']))
 
 }
  
-// Redirect to login page
+// Redirect to index page
 header("location: index.php");
 exit;
 ?>
