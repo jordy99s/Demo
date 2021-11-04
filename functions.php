@@ -1,5 +1,5 @@
 <?php
-
+/*
 function check_login($pdo)
 {
 
@@ -15,5 +15,12 @@ function check_login($pdo)
 			$user_data = mysqli_fetch_assoc($result);
 			return $user_data;
 		}
+	}
+}
+*/
+
+function check_login(){
+	if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+		
 	}
 }

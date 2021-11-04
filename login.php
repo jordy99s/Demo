@@ -1,9 +1,12 @@
 <?php 
-
+    //Iniciamos la sesion
     session_start();
 
-	include("config.php");
-	include("functions.php");
+	require_once "config.php";
+	
+    //include("functions.php");
+
+
     $correo = $pass = "";
     $username_err = $password_err = $login_err = "";
 
@@ -23,37 +26,49 @@
             $pass = $_POST['pass'];
         }
 
-		if(!empty($correo) && !empty($pass))
+		if(empty($username_err) && empty($password_err))
 		{
+            //Preparamos el select
+            $sql = "SELECT UserId, correo, pass FROM usuarios WHERE correo = :correo";
+			if($stmt = $pdo->prepare($sql)){
+                $stmt->bindParam(":correo", $param_username, PDO::PARAM_STR);
+                //Establecemos los parametros
+                $param_username = trim($_POST["correo"]);
+                //Ejecutamos el procedimiento
+                if($stmt->execute()){
+                    //Verificamos si el correo existe
+                    //Si es asi, entonces verificamos el password
+                    if($stmt->rowCount() == 1){
+                        if($row = $stmt->fetch()){
+                            $id = $row["UserId"];
+                            $correo = $row["correo"];
+                            $hashed_password = $row["pass"];
+                            if(password_verify($pass, $hashed_password)){
+                                //El password es correcto para iniciar una nueva sesion
+                                session_start();
 
-			//Verificamos desde la bd
-			$query = "select * from usuarios where correo = '$correo'";
-			$result = mysqli_query($link, $query);
+                                //Guardamos info en variables de sesion
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["UserId"] = $id;
+                                $_SESSION["correo"] = $correo;
 
-			if($result)
-			{
-				if($result && mysqli_num_rows($result) > 0)
-				{
-
-					$user_data = mysqli_fetch_assoc($result);
-					
-					if($user_data['pass'] === $pass)
-					{
-
-						$_SESSION['UserId'] = $user_data['UserId'];
-						header("Location: index.php");
-						die;
-					}else{
-                        $login_err = "Contraseña Incorrecta";
+                                header("location:index.php");
+                            }else{
+                                $login_err = "Contraseña Incorrecta";
+                            }
+                        }
+                    }else{
+                        $login_err = "Correo Incorrecto";
                     }
-				}else{
-                    $login_err = "Correo No Encontrado";
+                }else{
+                    echo "Opp! Something went wrong. Please try again later";
                 }
-			}
-		}else
-		{
-			$login_err = "No ha ingresado datos";
+
+                unset($stmt);
+            }
 		}
+        //Cerramos la conexion
+        unset($pdo);
 	}
 
 ?>
