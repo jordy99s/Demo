@@ -78,7 +78,7 @@
             <li class="navbar-btn">
                 <?php if (!empty($_SESSION['UserId'])) { ?>
                     <div class="dropdown">
-                        <button class="dropbtn">Hola, <?php echo $user_data['nombre'] ?> <i class="fa fa-caret-down"></i> </button>
+                        <button class="dropbtn">Hola, <?php echo htmlspecialchars($_SESSION["nombre"]) ?> <i class="fa fa-caret-down"></i> </button>
                         <div class="dropdown-content">
                             <a href="#">Ver Perfil</a>
                             <a href="./logout.php">Cerrar Sesión</a>
