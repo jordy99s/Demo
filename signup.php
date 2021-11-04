@@ -1,8 +1,7 @@
 <?php 
-    session_start();
 
-	include("config.php");
-	include("functions.php");
+	require_once "config.php";
+	//include("functions.php");
 
     $nombre = $apellido = $correo = $pass = $confirm_password = "";
     $nombre_err = $apellido_err = $username_err = $password_err = $login_err = $confirm_password_err = "";
@@ -10,48 +9,46 @@
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
 		//Verifico los campos
-        if(empty(trim($_POST['nombre']))){
+        if(empty(trim($_POST["nombre"]))){
             $nombre_err = "Por favor, ingrese su nombre";
         }else{
-            $nombre = $_POST['nombre'];
+            $nombre = $_POST["nombre"];
         }
 
-        if(empty(trim($_POST['apellido']))){
+        if(empty(trim($_POST["apellido"]))){
             $apellido_err = "Por favor, ingrese su apellido";
         }else{
-            $apellido = $_POST['apellido'];
+            $apellido = $_POST["apellido"];
         }
 
          //Verifico que haya ingresado un correo
-        if(empty(trim($_POST['correo']))){
+        if(empty(trim($_POST["correo"]))){
             $username_err = "Por favor, ingrese su correo";
         }else{
             // Preparamos un SELECT
-            $sql = "SELECT UserId FROM usuarios WHERE correo = ?";
+            $sql = "SELECT UserId FROM usuarios WHERE correo = :correo";
             
-            if($stmt = mysqli_prepare($link, $sql)){
+            if($stmt = $pdo->prepare($sql)){
                 // Amarramos las variables al prepared statement como parámetros
-                mysqli_stmt_bind_param($stmt, "s", $param_username);
+                $stmt->bindParam(":correo", $param_username, PDO::PARAM_STR);
                 
                 // Establecemos los parámetros
-                $param_username = trim($_POST['correo']);
+                $param_username = trim($_POST["correo"]);
                 
                 // Ejecutamos el prepared statement
-                if(mysqli_stmt_execute($stmt)){
-                    /* Almacenamos el resultado */
-                    mysqli_stmt_store_result($stmt);
+                if($stmt->execute()){
                     
-                    if(mysqli_stmt_num_rows($stmt) == 1){
-                        $username_err = "Este correo ya ha sido registrado";
-                    } else{
-                        $correo = $_POST['correo'];
+                    if($stmt->rowCount() == 1){
+                        $username_err = "Este correo ya se encuentra registrado";
+                    }else{
+                        $correo = trim($_POST["correo"]);
                     }
-                } else{
+                }else{
                     echo "Oops! Something went wrong. Please try again later.";
                 }
 
                 // Cerramos el statement
-                mysqli_stmt_close($stmt);
+                unset($stmt);
             }
         }
 
@@ -64,33 +61,51 @@
             //$pass = $_POST['pass'];
         }
         
-        
+        //Verificamos la confirmacion de password
         if(empty(trim($_POST["confirm_password"]))){
             // Validamos que se ingresó una contraseña
             $confirm_password_err = "Por favor, confirmar contraseña";
         }else{
-            if($_POST['pass'] != $_POST['confirm_password']){
+            if($_POST["pass"] != $_POST["confirm_password"]){
                 $confirm_password_err = "Las contraseñas no coinciden";
             }else{
-                $pass = $_POST['pass'];
+                $pass = $_POST["pass"];
             }
         }
 
 
-		if(!empty($correo) && !empty($pass) && !empty($nombre) && !empty($apellido) && !empty($confirm_password))
+		if(empty($username_err) && empty($password_err) && empty($nombre_err) && empty($apellido_err) && empty($confirm_password_err))
 		{
 
 			//Guardar en la base
-			$query = "insert into usuarios (nombre, apellido, correo, pass) values ('$nombre', '$apellido', '$correo','$pass')";
+			$sql = "insert into usuarios (nombre, apellido, correo, pass) values (:nombre, :apellido, :correo, :pass)";
 
-			mysqli_query($link, $query);
+			if($stmt = $pdo->prepare($sql)){
+                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
+                $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
+                $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
 
-			header("Location: login.php");
-			die;
-		}else
-		{
-			$login_err = "Se ha producido un error";
+                //Establecemos los parametros
+                $param_nombre = $nombre;
+                $param_apellido = $apellido;
+                $param_username = $correo;
+                $param_password = password_hash($pass, PASSWORD_DEFAULT);
+
+                //Ejecutamos el procedimiento 
+
+                if($stmt->execute()){
+                    header("Location: login.php");
+                }else{
+                    $login_err = "Algo salió mal";
+                }
+                //Close statement
+                unset($stmt);
+            }
+
 		}
+        //Cierra la conexion
+        unset($pdo);
 	}
 ?>
 

@@ -6,10 +6,10 @@
     define('DB_NAME', 'demo');
     
     /*Intento de conexion con la base de datos */
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    
-    // Verifico la conexion
-    if($link === false){
-        die("ERROR: No pudo conectarse. " . mysqli_connect_error());
+    try{
+        $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch(PDOException $e){
+        die("ERROR: No se pudo conectar." . $e->getMessage());
     }
 ?>
