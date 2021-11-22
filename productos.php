@@ -21,7 +21,7 @@
         include 'lognavbar.php';
     ?>
     <!--CUERPO-->
-    <p>Tuvimos un mes para meter los productos pero xd</p>
+    <h3>HERE GOES PRODUCT RELATED INFORMATION</h3>
     <!--FOOTER-->
     <?php
         include 'footer.php';
