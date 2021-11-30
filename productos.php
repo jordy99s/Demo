@@ -11,16 +11,105 @@
     <link rel="stylesheet" href="styles.css">
     <style>
        <?php include "styles.css" ?>
+    </style>
+    <style>
+        .dropdown {
+            float: left;
+            max-width: 1300px;
+        }
+
+        .dropdown .dropbtn {
+            font-size: 1rem;  
+            border: 2px solid #707070;
+            outline: none;
+            color: #707070;
+            padding: 6px 10px;
+            background-color: inherit;
+            font-family: inherit;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 6px 10px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @media screen and (max-width: 960px){
+            .dropdown .dropbtn {
+                font-size: 1.6rem;
+            }
+        }
+
     </style>    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <title>Productos</title>
 </head>
 <body>
-    <!-- CAMBIAR POR OTRO -->
     <!--HEADER-->
-    <?php
-        include 'lognavbar.php';
-    ?>
+    <!-- SHOPPING CART -->
+    <nav class="shopping-navbar">
+        <div class="shopping-container">
+            <a href="index.php" id="shopping-logo"><img src="images/logocomp.png" alt=""></a>
+            <div class="navbar-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="shopping-menu">
+                <li class="shopping-btn">
+                    <div class="dropdown">
+                        <button class="dropbtn">General <i class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            <a href="#">Destacado</a>
+                            <a href="#">Materiales de Construcción</a>
+                            <a href="#">Pinturas</a>
+                            <a href="#">Lavanderos</a>
+                            <a href="#">Accesorios para pintar</a>
+                            <a href="#">Grifería</a>
+                            <a href="#">Cerraduras</a>
+                            <a href="#">Cerámica</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="shopping-search">
+                    <input type="search" placeholder="Buscar"><a href="#"><i class="fa fa-search"></i></a>
+                </li>
+                <li class="shopping-user">
+                    <div class="user-welcome">
+                        Bienvenido, <?php echo htmlspecialchars($_SESSION["nombre"]) ?>
+                    </div>
+                </li>
+                <li class="shopping-cart">
+                    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                </li>
+            </ul>  
+        </div>
+    </nav>
     <!--CUERPO-->
     <div class="products">
         <h1>Nuestros Productos</h1>
