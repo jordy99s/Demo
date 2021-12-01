@@ -61,7 +61,7 @@
 
         @media screen and (max-width: 960px){
             .dropdown .dropbtn {
-                font-size: 1rem;
+                font-size: 1.5rem;
             }
         }
 

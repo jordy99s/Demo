@@ -1038,13 +1038,34 @@
     #shopping-logo{
         padding-left: 25px;
     }
-    .shopping-toggle .bar{
+    .navbar-toggle .bar{
         width: 25px;
         height: 3px;
         margin: 5px auto;
         transition: all 0.3s ease-in-out;
         background: #292E49;
     }
+    .shopping-search{
+        padding-left: 50px;
+        padding-right: 50px;
+        width: 100%;
+    }
+    .shopping-search input[type=search]{
+        width: 100%;
+        padding: 6px 10px;
+        box-sizing: border-box;
+        font-size: 1.6rem;
+    }
+    .shopping-search a{
+        padding: 6px 10px;
+    }
+    .shopping-user{
+        width: 100%;
+    }
+    .shopping-btn{
+        margin: 0;
+    }
+
     /* .navbar-links{
         text-align: center;
         padding: 2rem;
@@ -1057,9 +1078,7 @@
         right: 5%;
         transform: translate(5%, 20%);
     }
-    .navbar-btn{
-        padding-bottom: 1rem;
-    }
+
     .navbar-toggle .bar{
         display: block;
         cursor: pointer;
