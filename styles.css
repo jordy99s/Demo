@@ -952,7 +952,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 40%;
 }
 
 .shopping-search input[type=search]{
@@ -961,6 +961,10 @@
     padding: 6px 10px;
     box-sizing: border-box;
     font-size: 1rem;
+}
+
+.shopping-search input[type=search]:focus{
+    outline: none;
 }
 
 .shopping-search a{
@@ -980,6 +984,15 @@
     width: 25%;
 }
 
+.shopping-user .init{
+    text-decoration: none;
+    color: #707070;
+}
+
+.init:hover{
+    color: #FF9000;
+}
+
 .shopping-cart{
     display: flex;
     justify-content: center;
@@ -989,4 +1002,75 @@
 .shopping-cart a{
     font-size: 1.5rem;
     color: #707070;
+}
+
+@media screen and (max-width: 960px){
+    .shopping-container{
+        display: flex;
+        justify-content: space-between;
+        height: 80px;
+        z-index: 1;
+        width: 100%;
+        max-width: 1300px;
+        padding: 0;
+    }
+    .shopping-menu{
+        display: grid;
+        grid-template-columns: auto;
+        margin: 0;
+        width: 100%;
+        position: absolute;
+        top: -1000px;
+        opacity: 1;
+        transition: all 0.5s ease;
+        height: 50vh;
+        z-index: -1;
+        background: #fff;
+    }
+    .shopping-menu.active{
+        top: 100%;
+        opacity: 1;
+        transition: all 0.5s ease;
+        z-index: 99;
+        height: 70vh;
+        font-size: 1.6rem;
+    }
+    #shopping-logo{
+        padding-left: 25px;
+    }
+    .shopping-toggle .bar{
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        transition: all 0.3s ease-in-out;
+        background: #292E49;
+    }
+    /* .navbar-links{
+        text-align: center;
+        padding: 2rem;
+        width: 100%;
+        display: table;
+    } */
+    #mobile-menus{
+        position: absolute;
+        top: 20%;
+        right: 5%;
+        transform: translate(5%, 20%);
+    }
+    .navbar-btn{
+        padding-bottom: 1rem;
+    }
+    .navbar-toggle .bar{
+        display: block;
+        cursor: pointer;
+    }
+    #mobile-menus.is-active .bar:nth-child(2){
+        opacity: 0;
+    }
+    #mobile-menus.is-active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+    #mobile-menus.is-active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+    }
 }

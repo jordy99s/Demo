@@ -15,7 +15,7 @@
     <style>
         .dropdown {
             float: left;
-            max-width: 1300px;
+            width: 100%;
         }
 
         .dropdown .dropbtn {
@@ -61,7 +61,7 @@
 
         @media screen and (max-width: 960px){
             .dropdown .dropbtn {
-                font-size: 1.6rem;
+                font-size: 1rem;
             }
         }
 
@@ -100,9 +100,16 @@
                     <input type="search" placeholder="Buscar"><a href="#"><i class="fa fa-search"></i></a>
                 </li>
                 <li class="shopping-user">
-                    <div class="user-welcome">
-                        Bienvenido, <?php echo htmlspecialchars($_SESSION["nombre"]) ?>
-                    </div>
+                    <?php if (!empty($_SESSION['UserId'])) { ?>
+                        <div class="user-welcome">
+                            Bienvenido, <?php echo htmlspecialchars($_SESSION["nombre"]) ?>
+                        </div>
+                        <?php } else { ?>
+                            <div class="user-welcome">
+                                <a href="login.php" class="init">Inicie Sesión</a>
+                            </div>
+                    <?php } ?>
+                    
                 </li>
                 <li class="shopping-cart">
                     <a href="#"><i class="fa fa-shopping-cart"></i></a>
@@ -230,6 +237,10 @@
     ?>
     <!--FIN FOOTER-->
 
-    <script src="app.js"></script>
+    <script>
+        <?php
+            include 'app.js';
+        ?>
+    </script>
 </body>
 </html>
