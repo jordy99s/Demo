@@ -17,9 +17,6 @@ window.addEventListener('scroll', function(){
 });
 
 
-// PRODUCT PAGE
-
-
 //ANIMACION DEL SLIDER
  onload = start;
 
