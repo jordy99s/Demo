@@ -987,7 +987,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25%;
+    /* width: 15%; */
 }
 
 .shopping-user .init{
@@ -1006,7 +1006,7 @@
 }
 
 .shopping-cart button{
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: none;
     background-color: transparent;
     color: #707070;

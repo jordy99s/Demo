@@ -114,14 +114,14 @@
                     
                 </li>
                 <li class="shopping-cart">
-                    <button type="button" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i> (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button></div>
+                    <button type="button" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i> (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Limpiar</button></div>
                 </li>
             </ul>  
         </div>
     </nav>
     <!--CUERPO-->
     <div class="products">
-        <h1>Nuestros Productos</h1>
+        <h1 class="title">Nuestros Productos</h1>
         <div class="products-container">
             <div class="product-card">
                 <div class="product-image">
@@ -208,7 +208,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Sur Goltex" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Sur Latex" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Sur Latex" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Sur Goltex" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -234,17 +234,15 @@
         </div>
     </div>
      <!-- Modal -->
-    
+    <?php
+        include 'modal.php';
+    ?>
     <!--FOOTER-->
     <?php
         include 'footer.php';
     ?>
     <!--FIN FOOTER-->
-    <script>
-        <?php
-            include 'cart.js';
-        ?>
-    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="cart.js"></script>
     <script>
         <?php
             include 'app.js';
