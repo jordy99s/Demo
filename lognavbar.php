@@ -80,7 +80,7 @@
                     <div class="dropdown">
                         <button class="dropbtn">Hola, <?php echo htmlspecialchars($_SESSION["nombre"]) ?> <i class="fa fa-caret-down"></i> </button>
                         <div class="dropdown-content">
-                            <a href="#">Ver Perfil</a>
+                            <a href="profile.php">Ver Perfil</a>
                             <a href="./logout.php">Cerrar Sesión</a>
                         </div>
                     </div> 

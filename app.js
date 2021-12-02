@@ -28,3 +28,7 @@ window.addEventListener('scroll', function(){
      }
      setInterval(Move,3000) //3000 = 3s
  }
+
+
+
+ 

@@ -877,6 +877,7 @@
     margin-top: 10px;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .product-card .btn-ver{
@@ -898,7 +899,12 @@
     transition: 0.2s ease-in;
     cursor: pointer;
 }
- 
+
+.product-card .btn-add:hover{
+    transform: scale(1.075);
+    transition: 0.2s ease-in;
+    cursor: pointer;
+}
 
 /* SHOPPING CART */
 .shopping-navbar{
@@ -999,9 +1005,15 @@
     align-items: center;
 }
 
-.shopping-cart a{
+.shopping-cart button{
     font-size: 1.5rem;
+    border: none;
+    background-color: transparent;
     color: #707070;
+}
+
+.shopping-cart button:hover{
+    color: #414141;
 }
 
 @media screen and (max-width: 960px){
@@ -1092,4 +1104,159 @@
     #mobile-menus.is-active .bar:nth-child(3){
         transform: translateY(-8px) rotate(-45deg);
     }
+}
+
+/* CSS PARA PERFIL DEL USUARIO */
+.user-profile{
+    background-image: url(images/fondo.png);
+    background-size: cover;
+    display: flex;
+    /* flex-direction: column; */
+    /* align-items: center; */
+}
+
+.side-container{
+    float: left;
+    border-right: 2px solid #707070;
+    /* height: 500px; */
+    width: 400px;
+}
+
+.side-container a{
+    padding: 18px 8px;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: block;
+    transition: 0.3s;
+    color: #707070;
+    border-bottom: 2px solid #707070;
+}
+
+.side-container a:hover{
+    color: #FF9000;
+}
+
+.side-container a.active{
+    color: #FF9000;
+}
+
+.side-container .closebtn{
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.profile-container{
+    /* float: right; */
+    display: flex;
+    flex-direction: column;
+    padding: 8px 8px;
+    width: 100%;
+}
+
+.info-cuenta{
+    /* border-bottom: 2px solid #707070; */
+    padding: 10px 10px;
+    width: 500px;
+}
+
+.info-cuenta .data-group{
+    font-size: 1.2rem;
+    margin: 10px 10px;
+}
+
+.info{
+    /* border: 2px solid #707070; */
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.contra{
+    /* border: 2px solid #707070; */
+    width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+.info-cuenta .data-group input{
+    border: 2px solid #707070;
+    padding: 5px 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.info-cuenta .data-group input:focus{
+    outline: none;
+}
+
+.data-button{
+    float: right;
+}
+
+.data-button button{
+    background-color: #292E49;
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.data-button a{
+    background-color: #FC5656;
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+@media screen and  (max-width: 690px) {
+    .side-container{
+        width: 0;
+        overflow-x: hidden;
+        z-index: 1;
+        position: fixed;
+        transition: 0.5s;
+        background-color: #fff;
+    }
+    .side-container .closebtn{
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 2rem;
+        margin-left: 50px;
+    }
+    .info-cuenta{
+        width: 400px;
+    }
+    .info{
+        width: 350px;
+    }
+    .contra{
+        width: 400px;
+    }
+}
+
+
+.data-group .invalid-feedback{
+    margin-top: 10px;
+    padding: 2px 2px;
+    /* background-color: #F2DEDE; */
+    color: #A94442;
+}
+
+.info-cuenta .alert{
+    background-color: #F2DEDE;
+    color: #A94442;
 }

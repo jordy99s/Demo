@@ -112,7 +112,7 @@
                     
                 </li>
                 <li class="shopping-cart">
-                    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                    <button type="button" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i> <span class="total-count"></span></button>
                 </li>
             </ul>  
         </div>
@@ -131,10 +131,10 @@
                         <div class="c-text">
                             Precio: C$ 409.36
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -149,10 +149,10 @@
                         <div class="c-text">
                             Precio: C$ 85.00
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -167,10 +167,10 @@
                         <div class="c-text">
                             Precio: C$ 999.99
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -185,10 +185,10 @@
                         <div class="c-text">
                             Precio: C$ 999.99
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -203,10 +203,10 @@
                         <div class="c-text">
                             Precio: C$ 999.99
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -221,10 +221,10 @@
                         <div class="c-text">
                             Precio: C$ 999.99
                         </div>
-                        <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button>
+                        <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <button class="btn-add">Agregar al carrito</button>
+                        <a href="#" class="btn-add">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
