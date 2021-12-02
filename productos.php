@@ -121,7 +121,7 @@
     </nav>
     <!--CUERPO-->
     <div class="products">
-        <h1 class="title">Nuestros Productos</h1>
+        <h1>Nuestros Productos</h1>
         <div class="products-container">
             <div class="product-card">
                 <div class="product-image">
@@ -136,7 +136,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" data-name="Cemento Holcim" data-price="409.36" class="btn-add add-to-cart">Agregar al carrito</a>
+                        <a href="#" data-name="HolcimF" data-price="409.36" class="btn-add add-to-cart">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Brocha Pintura" data-price="85.00" >Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Brocha" data-price="85.00" >Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Cemento Cemex" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="CemexB" data-price="109.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Anticorrosivo Lanco" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="LancoA" data-price="209.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Sur Latex" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="SurLatex" data-price="326.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add add-to-cart" data-name="Sur Goltex" data-price="409.36">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="SurGoltex" data-price="255.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
