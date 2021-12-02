@@ -67,6 +67,8 @@
 
     </style>    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <title>Productos</title>
 </head>
 <body>
@@ -112,7 +114,7 @@
                     
                 </li>
                 <li class="shopping-cart">
-                    <button type="button" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i> <span class="total-count"></span></button>
+                    <button type="button" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i> (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Clear Cart</button></div>
                 </li>
             </ul>  
         </div>
@@ -134,7 +136,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" data-name="Cemento Holcim" data-price="409.36" class="btn-add add-to-cart">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -152,7 +154,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Brocha Pintura" data-price="85.00" >Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -170,7 +172,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Cemento Cemex" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -188,7 +190,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Anticorrosivo Lanco" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -206,7 +208,7 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Sur Goltex" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
@@ -224,19 +226,25 @@
                         <!-- <button class="btn-menos">-</button><input type="text" size="2" autofocus placeholder="1"><button class="btn-mas">+</button> -->
                     </div>
                     <div class="button-group">
-                        <a href="#" class="btn-add">Agregar al carrito</a>
+                        <a href="#" class="btn-add add-to-cart" data-name="Sur Latex" data-price="409.36">Agregar al carrito</a>
                         <button class="btn-ver">Ver más</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+     <!-- Modal -->
+    
     <!--FOOTER-->
     <?php
         include 'footer.php';
     ?>
     <!--FIN FOOTER-->
-
+    <script>
+        <?php
+            include 'cart.js';
+        ?>
+    </script>
     <script>
         <?php
             include 'app.js';

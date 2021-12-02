@@ -1006,7 +1006,7 @@
 }
 
 .shopping-cart button{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     border: none;
     background-color: transparent;
     color: #707070;
@@ -1015,6 +1015,16 @@
 .shopping-cart button:hover{
     color: #414141;
 }
+
+.shopping-cart .clear-cart{
+    font-size: 1rem;
+    border: none;
+    background-color: #FC5656;
+    color: #fff;
+    padding: 5px 5px;
+    margin-left: 5px;
+}
+
 
 @media screen and (max-width: 960px){
     .shopping-container{
