@@ -59,7 +59,7 @@
                                 $_SESSION["rol"] = $rol;
 
                                 if($rol == 0){
-                                    header("location:admin-page.php");
+                                    header("location:admin/admin-page.php");
                                 }else if($rol == 1){
                                     header("location:index.php");
                                 }
