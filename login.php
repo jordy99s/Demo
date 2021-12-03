@@ -29,7 +29,7 @@
 		if(empty($username_err) && empty($password_err))
 		{
             //Preparamos el select
-            $sql = "SELECT UserId, nombre, apellido, correo, pass FROM usuarios WHERE correo = :correo";
+            $sql = "SELECT UserId, nombre, apellido, correo, rol, pass FROM usuarios WHERE correo = :correo";
 			if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":correo", $param_username, PDO::PARAM_STR);
                 //Establecemos los parametros
@@ -44,6 +44,7 @@
                             $nombre = $row["nombre"];
                             $apellido = $row["apellido"]; 
                             $correo = $row["correo"];
+                            $rol = $row["rol"];
                             $hashed_password = $row["pass"];
                             if(password_verify($pass, $hashed_password)){
                                 //El password es correcto para iniciar una nueva sesion
@@ -55,8 +56,13 @@
                                 $_SESSION["nombre"] = $nombre;
                                 $_SESSION["apellido"] = "$apellido";
                                 $_SESSION["correo"] = $correo;
+                                $_SESSION["rol"] = $rol;
 
-                                header("location:index.php");
+                                if($rol == 0){
+                                    header("location:admin-page.php");
+                                }else if($rol == 1){
+                                    header("location:index.php");
+                                }
                             }else{
                                 $login_err = "Contraseña Incorrecta";
                             }

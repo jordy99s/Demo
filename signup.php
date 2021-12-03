@@ -3,7 +3,7 @@
 	require_once "config.php";
 	//include("functions.php");
 
-    $nombre = $apellido = $correo = $pass = $confirm_password = "";
+    $nombre = $apellido = $correo = $pass = $confirm_password = $rol = "";
     $nombre_err = $apellido_err = $username_err = $password_err = $login_err = $confirm_password_err = "";
 
 	if($_SERVER['REQUEST_METHOD'] == "POST")
@@ -20,6 +20,8 @@
         }else{
             $apellido = $_POST["apellido"];
         }
+
+
 
          //Verifico que haya ingresado un correo
         if(empty(trim($_POST["correo"]))){
@@ -78,18 +80,20 @@
 		{
 
 			//Guardar en la base
-			$sql = "insert into usuarios (nombre, apellido, correo, pass) values (:nombre, :apellido, :correo, :pass)";
+			$sql = "insert into usuarios (nombre, apellido, correo, rol, pass) values (:nombre, :apellido, :correo, 1, :pass)";
 
 			if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
                 $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
                 $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
+                // $stmt->bindParam('Usuario',$param_tipo, PDO::PARAM_STR);
                 $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
 
                 //Establecemos los parametros
                 $param_nombre = $nombre;
                 $param_apellido = $apellido;
                 $param_username = $correo;
+                // $param_tipo = $tipo;
                 $param_password = password_hash($pass, PASSWORD_DEFAULT);
 
                 //Ejecutamos el procedimiento 
