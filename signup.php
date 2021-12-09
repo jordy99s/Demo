@@ -28,7 +28,7 @@
             $username_err = "Por favor, ingrese su correo";
         }else{
             // Preparamos un SELECT
-            $sql = "SELECT UserId FROM usuarios WHERE correo = :correo";
+            $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
             
             if($stmt = $pdo->prepare($sql)){
                 // Amarramos las variables al prepared statement como parámetros
@@ -80,7 +80,7 @@
 		{
 
 			//Guardar en la base
-			$sql = "insert into usuarios (nombre, apellido, correo, rol, pass) values (:nombre, :apellido, :correo, 1, :pass)";
+			$sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, 1, :pass)";
 
 			if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);

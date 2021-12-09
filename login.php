@@ -29,7 +29,7 @@
 		if(empty($username_err) && empty($password_err))
 		{
             //Preparamos el select
-            $sql = "SELECT UserId, nombre, apellido, correo, rol, pass FROM usuarios WHERE correo = :correo";
+            $sql = "SELECT UserId, nombre, apellido, correo, rol, pass FROM Usuarios WHERE correo = :correo";
 			if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":correo", $param_username, PDO::PARAM_STR);
                 //Establecemos los parametros
@@ -48,7 +48,7 @@
                             $hashed_password = $row["pass"];
                             if(password_verify($pass, $hashed_password)){
                                 //El password es correcto para iniciar una nueva sesion
-                                session_start();
+                                //session_start();
 
                                 //Guardamos info en variables de sesion
                                 $_SESSION["loggedin"] = true;
