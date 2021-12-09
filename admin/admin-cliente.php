@@ -52,12 +52,12 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Empleados</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
                     </div>
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Información de Empleados</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Información de Clientes</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
