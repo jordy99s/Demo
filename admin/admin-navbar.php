@@ -38,7 +38,7 @@
     
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="inventario.php">
             <i class="fas fa-fw fa-table"></i>
             <span>Inventario</span></a>
     </li>

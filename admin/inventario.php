@@ -52,30 +52,30 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Empleados</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Productos</h1>
                     </div>
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Información de Empleados</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Información de Productos</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>ProductoId</th>
                                             <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Correo</th>
-                                            <th>Rol</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>ProductoId</th>
                                             <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Correo</th>
-                                            <th>Rol</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -134,14 +134,14 @@
         $(document).ready(function() {
             $('#example').DataTable( {
                 "ajax" : {
-                    "url" : "get_data.php",
+                    "url" : "get_datap.php",
                     "dataSrc" : ""
                 },
                 "columns" : [
+                    {"data" : "ProductoId"},
                     {"data" : "nombre"},
-                    {"data" : "apellido"},
-                    {"data" : "correo"},
-                    {"data" : "rol"}
+                    {"data" : "cantidad"},
+                    {"data" : "precio"}
                 ]
             } );
         } );

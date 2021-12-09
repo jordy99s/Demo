@@ -130,11 +130,19 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable( {
-                "processing": true,
-                "ajax": "get_data.php"
+                "ajax" : {
+                    "url" : "get_datac.php",
+                    "dataSrc" : ""
+                },
+                "columns" : [
+                    {"data" : "nombre"},
+                    {"data" : "apellido"},
+                    {"data" : "correo"},
+                    {"data" : "rol"}
+                ]
             } );
         } );
     </script>
