@@ -7,6 +7,36 @@
        exit;
    }
 
+   require_once "../config.php";
+
+   $nombre = $cantidad = $precio = $imagen = "";
+   $nombre_err = $cantidad_err = $precio_err = $imagen_err = "";
+
+   if($_SERVER['REQUEST_METHOD'] == "POST"){
+    //    Verifico los campos
+        if(empty(trim($_POST["nombre"]))){
+            $nombre_err = "Por favor, ingrese un nombre";
+        }else{
+            $nombre = $_POST["nombre"];
+        }
+
+        if(empty(trim($_POST["cantidad"]))){
+            $cantidad_err = "Ingrese una cantidad";
+        }elseif ($_POST["cantidad"] <= 0) {
+            $cantidad_err = "Ingrese una cantidad mayor a 0";
+        }else{
+            $cantidad = $_POST["cantidad"];
+        }
+
+        if(empty(trim($_POST["precio"]))){
+            $precio_err = "Ingrese una precio";
+        }elseif ($_POST["precio"] <= 0) {
+            $precio_err = "Ingrese un precio mayor a 0";
+        }else{
+            $cantidad = $_POST["precio"];
+        }
+   }
+
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +48,7 @@
     <meta name="description" content="">
     <meta name="jordy4vz" content="">
 
-    <title>Empleados Dashboard</title>
+    <title>Inventario Dashboard</title>
 
         <!-- Custom fonts for this template -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -55,6 +85,49 @@
                         <h1 class="h3 mb-0 text-gray-800">Productos</h1>
                     </div>
                     <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Registro de Productos</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form action="" method="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Nombre del Producto</label>
+                                                <input type="text" name="nombre" id="nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
+                                                <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="imagen">Imagen</label> <br>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" name="imagen" id="imagen" class="form-input <?php echo (!empty($imagen_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $imagen; ?>">
+                                                <span class="invalid-feedback"><?php echo $imagen_err; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="cantidad">Cantidad</label>
+                                                <input type="number" name="cantidad" id="cantidad" class="form-control <?php echo (!empty($cantidad_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $cantidad; ?>">
+                                                <span class="invalid-feedback"><?php echo $cantidad_err; ?></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="Precio">Precio</label>
+                                                <input type="number" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>">
+                                                <span class="invalid-feedback"><?php echo $precio_err; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group-col md-6">
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Información de Productos</h6>
