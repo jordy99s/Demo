@@ -198,6 +198,7 @@
                                             <th>Cantidad</th>
                                             <th>Precio</th>
                                             <th>Imagen</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -207,6 +208,7 @@
                                             <th>Cantidad</th>
                                             <th>Precio</th>
                                             <th>Imagen</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -273,7 +275,8 @@
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
                     {"data" : "precio"},
-                    {"data" : "imagen"}
+                    {"data" : "imagen"},
+                    {"defaultContent" : "<button class='btn btn-primary'>Editar</button> <button class='btn btn-danger'>Deshabilitar</button>"}
                 ]
             } );
         } );
