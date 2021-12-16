@@ -51,12 +51,14 @@
             $cantidad = $_POST["cantidad"];
         }
 
+        $imagen = $_POST["imagen"];
+
         if(empty(trim($_POST["precio"]))){
-            $precio_err = "Ingrese una precio";
+            $precio_err = "Ingrese un precio";
         }elseif ($_POST["precio"] <= 0) {
             $precio_err = "Ingrese un precio mayor a 0";
         }else{
-            $cantidad = $_POST["precio"];
+            $precio = $_POST["precio"];
         }
 
         if(empty($nombre_err) && empty($precio_err) && empty($cantidad_err)){
@@ -162,7 +164,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="Precio">Precio</label>
-                                                <input type="number" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>">
+                                                <input type="text" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>" onkeypress="validate();">
                                                 <span class="invalid-feedback"><?php echo $precio_err; ?></span>
                                             </div>
                                         </div>
@@ -190,6 +192,7 @@
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -198,6 +201,7 @@
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -263,10 +267,17 @@
                     {"data" : "ProductoId"},
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
-                    {"data" : "precio"}
+                    {"data" : "precio"},
+                    {"data" : "imagen"}
                 ]
             } );
         } );
+    </script>
+    <script>
+        function validate(s) {
+            var rgx = /^[0-9]*\.?[0-9]*$/;
+            return s.match(rgx);
+        }
     </script>
 
 </body>

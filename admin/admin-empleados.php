@@ -122,7 +122,7 @@
 }
 //Cierra la conexion
 unset($pdo);
-}
+
 ?>
 
 <!DOCTYPE html>
