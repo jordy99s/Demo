@@ -1,7 +1,7 @@
 <?php
  
 $con = mysqli_connect("localhost", "root", "", "demo");
-$result = mysqli_query($con, "SELECT ProductoId, nombre, cantidad, precio FROM Producto");
+$result = mysqli_query($con, "SELECT ProductoId, nombre, cantidad, precio, imagen FROM Producto");
 $rows = array();
 while($row = mysqli_fetch_array($result)){
     $rows[] = $row;

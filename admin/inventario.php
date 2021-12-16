@@ -10,7 +10,7 @@
    require_once "../config.php";
 
    $nombre = $cantidad = $precio = $imagen = "";
-   $nombre_err = $cantidad_err = $precio_err = $imagen_err = "";
+   $nombre_err = $cantidad_err = $precio_err = $imagen_err = $insert_err = "";
 
    if($_SERVER['REQUEST_METHOD'] == "POST"){
     //    Verifico los campos
@@ -51,15 +51,41 @@
             $cantidad = $_POST["cantidad"];
         }
 
+        $imagen = $_POST["imagen"];
+
         if(empty(trim($_POST["precio"]))){
-            $precio_err = "Ingrese una precio";
+            $precio_err = "Ingrese un precio";
         }elseif ($_POST["precio"] <= 0) {
             $precio_err = "Ingrese un precio mayor a 0";
         }else{
-            $cantidad = $_POST["precio"];
+            $precio = $_POST["precio"];
         }
 
+        if(empty($nombre_err) && empty($precio_err) && empty($cantidad_err)){
+            // Hacemos una consulta
+            $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen) VALUES (:nombre, :cantidad, :precio, :imagen)";
 
+            if($stmt = $pdo -> prepare($sql)){
+                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                $stmt->bindParam(":cantidad", $param_cantidad, PDO::PARAM_STR);
+                $stmt->bindParam(":precio", $param_precio, PDO::PARAM_STR);
+                $stmt->bindParam(":imagen", $param_imagen, PDO::PARAM_STR);
+
+                $param_nombre = $nombre;
+                $param_cantidad = $cantidad;
+                $param_precio = $precio;
+                $param_imagen = $imagen;
+
+                if($stmt -> execute()){
+                    header("Location: inventario.php");
+                }else{
+                    $insert_err = "Algo salió mal";
+                }
+                unset($stmt);
+            }
+        }
+
+        unset($pdo);
    }
 
 ?>
@@ -138,7 +164,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="Precio">Precio</label>
-                                                <input type="number" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>">
+                                                <input type="text" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>" onkeypress="validate();">
                                                 <span class="invalid-feedback"><?php echo $precio_err; ?></span>
                                             </div>
                                         </div>
@@ -166,6 +192,7 @@
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -174,6 +201,7 @@
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
+                                            <th>Imagen</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -239,10 +267,17 @@
                     {"data" : "ProductoId"},
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
-                    {"data" : "precio"}
+                    {"data" : "precio"},
+                    {"data" : "imagen"}
                 ]
             } );
         } );
+    </script>
+    <script>
+        function validate(s) {
+            var rgx = /^[0-9]*\.?[0-9]*$/;
+            return s.match(rgx);
+        }
     </script>
 
 </body>
