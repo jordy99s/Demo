@@ -34,35 +34,35 @@
         }
 
         //Verifico que haya ingresado un correo
-    if(empty(trim($_POST["correo"]))){
-        $correo_err = "Por favor, ingrese su correo";
+        if(empty(trim($_POST["correo"]))){
+            $correo_err = "Por favor, ingrese su correo";
         }else{
-        // Preparamos un SELECT
-        $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
+            // Preparamos un SELECT
+            $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
         
-        if($stmt = $pdo->prepare($sql)){
-            // Amarramos las variables al prepared statement como parámetros
-            $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
+            if($stmt = $pdo->prepare($sql)){
+                // Amarramos las variables al prepared statement como parámetros
+                $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
             
-            // Establecemos los parámetros
-            $param_correo = trim($_POST["correo"]);
+                // Establecemos los parámetros
+                $param_correo = trim($_POST["correo"]);
             
-            // Ejecutamos el prepared statement
-            if($stmt->execute()){
+                // Ejecutamos el prepared statement
+                if($stmt->execute()){
                 
-                if($stmt->rowCount() == 1){
-                    $correo_err = "Este correo ya se encuentra registrado";
+                    if($stmt->rowCount() == 1){
+                        $correo_err = "Este correo ya se encuentra registrado";
+                    }else{
+                        $correo = trim($_POST["correo"]);
+                    }
                 }else{
-                    $correo = trim($_POST["correo"]);
+                    echo "Oops! Something went wrong. Please try again later.";
                 }
-            }else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
     
-            // Cerramos el statement
-            unset($stmt);
+                // Cerramos el statement
+                unset($stmt);
+            }
         }
-    }
     
         //Verifico que haya ingresado una contraseña
         if(empty(trim($_POST["password"]))){
@@ -70,7 +70,7 @@
         }elseif(strlen(trim($_POST["password"])) < 6){
             $password_err = "La contraseña debe contener más de 6 caracteres";
         }else{
-            //$pass = $_POST['pass'];
+            $pass = $_POST['password'];
         }
     
     
@@ -82,16 +82,14 @@
             if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
                 $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
-                $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
-                // $stmt->bindParam('Usuario',$param_tipo, PDO::PARAM_STR);
+                $stmt->bindParam(":correo",$param_correo, PDO::PARAM_STR);
                 $stmt->bindParam(":rol",$param_rol, PDO::PARAM_STR);
                 $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
     
                 //Establecemos los parametros
                 $param_nombre = $nombre;
                 $param_apellido = $apellido;
-                $param_username = $correo;
-                // $param_tipo = $tipo;
+                $param_correo = $correo;
                 $param_rol = $rol;
                 $param_password = password_hash($pass, PASSWORD_DEFAULT);
     
@@ -169,16 +167,16 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Registro de Empleados</h6>
                                 </div>
                                 <div class="card-body">
-                                <form class="form" id="registroempleados" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <?php 
-                                if(!empty($admin_empleados_err)){
-                                    echo '<div class="alert alert-danger">' . $admin_empleados_err . '</div>';
-                                }        
-                                ?>    
-                                    <div class="form-row">
+                                    <form class="form" id="registroempleados" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <?php 
+                                            if(!empty($admin_empleados_err)){
+                                                echo '<div class="alert alert-danger">' . $admin_empleados_err . '</div>';
+                                            }        
+                                        ?>    
+                                        <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Nombre</label>
-                                                <input type="text" name="nombre" id="nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
+                                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
                                                 <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -200,7 +198,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                            <div class="form-group col-md-6">
                                                 <label for="inputRol">Rol</label>
                                                 <select id="inputRol" onchange="rolSelection();" class="form-control">
                                                     <option>Seleccionar</option>
@@ -222,8 +220,6 @@
                             </div>
                         </div>
                     </div>
-        
-
                 </div>
     <!-- Termina cambio -->
                 <div class="container-fluid">
@@ -255,12 +251,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
             </div>
         </div>
-
     </div>
     <!-- End of Page Wrapper -->
 
