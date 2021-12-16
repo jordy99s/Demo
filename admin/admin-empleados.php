@@ -48,6 +48,73 @@
                     include 'navbar-top.php'
                 ?>
                 <!-- MAIN CONTAINER -->
+
+        <!-- Empieza cambio -->
+                <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Registro de empleados</h1>
+                            </div>
+                            <form class="user">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="Nombre">
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="Correo electrónico">
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="Teléfono">
+                                    </div>
+                                </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="Cédula">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="Usuario">
+                                    </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="Contraseña">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="Estado">
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-user btn-block">
+                                    Guardar
+                                </a>
+                                <a href="#" class="btn btn-primary btn-user btn-block">
+                                    Cancelar
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Termina cambio -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
