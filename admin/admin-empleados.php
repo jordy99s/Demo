@@ -22,7 +22,7 @@
         if(empty(trim($_POST["apellido"]))){
             $apellido_err = "Por favor, ingrese el apellido";
         }else{
-            $cedula = $_POST["apellido"];
+            $apellido = $_POST["apellido"];
         }
 
         if(empty(trim($_POST["correo"]))){
