@@ -1,11 +1,12 @@
 <?php
- 
-$con = mysqli_connect("localhost", "root", "", "demo");
-$result = mysqli_query($con, "SELECT nombre, apellido, correo, rol FROM Usuarios WHERE rol = 'Administrador' OR rol = 'Empleado'");
-$rows = array();
-while($row = mysqli_fetch_array($result)){
-    $rows[] = $row;
-}
-echo json_encode($rows);
+
+    include_once("../config.php");
+    $sql = $pdo->prepare("SELECT nombre, apellido, correo, rol FROM Usuarios WHERE rol = 'Administrador' OR rol = 'Empleado'");
+    $sql -> execute();
+    $rows = array();
+    while($row = $sql->fetch()){
+        $rows[] = $row;
+    }
+    echo json_encode($rows);
 
 ?>

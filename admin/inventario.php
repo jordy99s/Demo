@@ -143,7 +143,12 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Registro de Productos</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                        <?php 
+                                            if(!empty($insert_err)){
+                                                echo '<div class="alert alert-danger">' . $insert_err . '</div>';
+                                            }        
+                                        ?>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Nombre del Producto</label>
