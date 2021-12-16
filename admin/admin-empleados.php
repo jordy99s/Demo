@@ -44,85 +44,84 @@
         }else{
             $rol = $_POST["rol"];
         }
-   }
 
-
-   //Verifico que haya ingresado un correo
+        //Verifico que haya ingresado un correo
     if(empty(trim($_POST["correo"]))){
-    $correo_err = "Por favor, ingrese su correo";
-    }else{
-    // Preparamos un SELECT
-    $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
-    
-    if($stmt = $pdo->prepare($sql)){
-        // Amarramos las variables al prepared statement como parámetros
-        $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
-        
-        // Establecemos los parámetros
-        $param_correo = trim($_POST["correo"]);
-        
-        // Ejecutamos el prepared statement
-        if($stmt->execute()){
-            
-            if($stmt->rowCount() == 1){
-                $correo_err = "Este correo ya se encuentra registrado";
-            }else{
-                $correo = trim($_POST["correo"]);
-            }
+        $correo_err = "Por favor, ingrese su correo";
         }else{
-            echo "Oops! Something went wrong. Please try again later.";
-        }
-
-        // Cerramos el statement
-        unset($stmt);
-    }
-}
-
-    //Verifico que haya ingresado una contraseña
-    if(empty(trim($_POST["pass"]))){
-        $password_err = "Por favor, ingrese su contraseña";
-    }elseif(strlen(trim($_POST["pass"])) < 6){
-        $password_err = "La contraseña debe contener más de 6 caracteres";
-    }else{
-        //$pass = $_POST['pass'];
-    }
-
-
-    if(empty($correo_err) && empty($password_err) && empty($nombre_err) && empty($apellido_err) && empty($rol_err))
-    {
-
-        //Guardar en la base
-        $sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, 1, :pass)";
-
+        // Preparamos un SELECT
+        $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
+        
         if($stmt = $pdo->prepare($sql)){
-            $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
-            $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
-            $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
-            // $stmt->bindParam('Usuario',$param_tipo, PDO::PARAM_STR);
-            $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
-
-            //Establecemos los parametros
-            $param_nombre = $nombre;
-            $param_apellido = $apellido;
-            $param_username = $correo;
-            // $param_tipo = $tipo;
-            $param_password = password_hash($pass, PASSWORD_DEFAULT);
-
-            //Ejecutamos el procedimiento 
-
+            // Amarramos las variables al prepared statement como parámetros
+            $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
+            
+            // Establecemos los parámetros
+            $param_correo = trim($_POST["correo"]);
+            
+            // Ejecutamos el prepared statement
             if($stmt->execute()){
-                header("Location: login.php");
+                
+                if($stmt->rowCount() == 1){
+                    $correo_err = "Este correo ya se encuentra registrado";
+                }else{
+                    $correo = trim($_POST["correo"]);
+                }
             }else{
-            $login_err = "Algo salió mal";
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+    
+            // Cerramos el statement
+            unset($stmt);
         }
-        //Close statement
-        unset($stmt);
     }
-
-}
-//Cierra la conexion
-unset($pdo);
-}
+    
+        //Verifico que haya ingresado una contraseña
+        if(empty(trim($_POST["password"]))){
+            $password_err = "Por favor, ingrese su contraseña";
+        }elseif(strlen(trim($_POST["password"])) < 6){
+            $password_err = "La contraseña debe contener más de 6 caracteres";
+        }else{
+            //$pass = $_POST['pass'];
+        }
+    
+    
+        if(empty($correo_err) && empty($password_err) && empty($nombre_err) && empty($apellido_err) && empty($rol_err))
+        {
+            //Guardar en la base
+            $sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, :rol, :pass)";
+    
+            if($stmt = $pdo->prepare($sql)){
+                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
+                $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
+                // $stmt->bindParam('Usuario',$param_tipo, PDO::PARAM_STR);
+                $stmt->bindParam(":rol",$param_rol, PDO::PARAM_STR);
+                $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
+    
+                //Establecemos los parametros
+                $param_nombre = $nombre;
+                $param_apellido = $apellido;
+                $param_username = $correo;
+                // $param_tipo = $tipo;
+                $param_rol = $rol;
+                $param_password = password_hash($pass, PASSWORD_DEFAULT);
+    
+                //Ejecutamos el procedimiento 
+    
+                if($stmt->execute()){
+                    header("Location: admin-empleados.php");
+                }else{
+                $login_err = "Algo salió mal";
+            }
+            //Close statement
+            unset($stmt);
+        }
+    
+    }
+    //Cierra la conexion
+    unset($pdo);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -147,14 +146,6 @@ unset($pdo);
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-    <script>
-        function rolSelection(){
-            var d = document.getElementById("inputRol");
-            var displayText = d.options[d.selectedIndex].text;
-            document.getElementById("rol").value = displayText;
-        }
-    </script>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -194,7 +185,7 @@ unset($pdo);
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Apellido</label>
-                                                <input type="text" name="apellido" id="apellido" placeholder="Correo electrónico" class="form-control <?php echo (!empty($apellido_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $apellido; ?>">
+                                                <input type="text" name="apellido" id="apellido" placeholder="Apellido" class="form-control <?php echo (!empty($apellido_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $apellido; ?>">
                                                 <span class="invalid-feedback"><?php echo $apellido_err; ?></span>
                                             </div>
                                         </div>
@@ -330,6 +321,12 @@ unset($pdo);
             } );
         } );
     </script>
-
+    <script>
+        function rolSelection(){
+            var d = document.getElementById("inputRol");
+            var displayText = d.options[d.selectedIndex].text;
+            document.getElementById("rol").value = displayText;
+        }
+    </script>
 </body>
 </html>
