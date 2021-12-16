@@ -10,7 +10,7 @@
    require_once "../config.php";
 
    $nombre = $cantidad = $precio = $imagen = "";
-   $nombre_err = $cantidad_err = $precio_err = $imagen_err = "";
+   $nombre_err = $cantidad_err = $precio_err = $imagen_err = $insert_err = "";
 
    if($_SERVER['REQUEST_METHOD'] == "POST"){
     //    Verifico los campos
@@ -59,7 +59,31 @@
             $cantidad = $_POST["precio"];
         }
 
+        if(empty($nombre_err) && empty($precio_err) && empty($cantidad_err)){
+            // Hacemos una consulta
+            $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen) VALUES (:nombre, :cantidad, :precio, :imagen)";
 
+            if($stmt = $pdo -> prepare($sql)){
+                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                $stmt->bindParam(":cantidad", $param_cantidad, PDO::PARAM_STR);
+                $stmt->bindParam(":precio", $param_precio, PDO::PARAM_STR);
+                $stmt->bindParam(":imagen", $param_imagen, PDO::PARAM_STR);
+
+                $param_nombre = $nombre;
+                $param_cantidad = $cantidad;
+                $param_precio = $precio;
+                $param_imagen = $imagen;
+
+                if($stmt -> execute()){
+                    header("Location: inventario.php");
+                }else{
+                    $insert_err = "Algo salió mal";
+                }
+                unset($stmt);
+            }
+        }
+
+        unset($pdo);
    }
 
 ?>
