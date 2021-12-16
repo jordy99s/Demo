@@ -80,7 +80,7 @@
 		{
 
 			//Guardar en la base
-			$sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, 1, :pass)";
+			$sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, 'Usuario', :pass)";
 
 			if($stmt = $pdo->prepare($sql)){
                 $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);

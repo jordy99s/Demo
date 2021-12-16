@@ -17,7 +17,30 @@
         if(empty(trim($_POST["nombre"]))){
             $nombre_err = "Por favor, ingrese un nombre";
         }else{
-            $nombre = $_POST["nombre"];
+            $sql = "SELECT ProductoId FROM Producto WHERE nombre = :nombre";
+            
+            if($stmt = $pdo->prepare($sql)){
+                // Amarramos las variables al prepared statement como parámetros
+                $stmt->bindParam(":nombre", $param_username, PDO::PARAM_STR);
+                
+                // Establecemos los parámetros
+                $param_nombre = trim($_POST["nombre"]);
+                
+                // Ejecutamos el prepared statement
+                if($stmt->execute()){
+                    
+                    if($stmt->rowCount() == 1){
+                        $nombre_err = "Este producto ya se encuentra registrado";
+                    }else{
+                        $nombre = trim($_POST["nombre"]);
+                    }
+                }else{
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+
+                // Cerramos el statement
+                unset($stmt);
+            }
         }
 
         if(empty(trim($_POST["cantidad"]))){
@@ -35,6 +58,8 @@
         }else{
             $cantidad = $_POST["precio"];
         }
+
+
    }
 
 ?>

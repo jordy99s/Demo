@@ -58,9 +58,9 @@
                                 $_SESSION["correo"] = $correo;
                                 $_SESSION["rol"] = $rol;
 
-                                if($rol == 0){
+                                if($rol == 'Administrador' || $rol == 'Empleado'){
                                     header("location:admin/admin-page.php");
-                                }else if($rol == 1){
+                                }else if($rol == 'Usuario'){
                                     header("location:index.php");
                                 }
                             }else{
