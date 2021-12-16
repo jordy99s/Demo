@@ -6,7 +6,123 @@
        header("location: ../index.php");
        exit;
    }
+   require_once "../config.php";
 
+   $nombre = $apellido = $correo = $password = $rol = "";
+   $nombre_err = $apellido_err = $correo_err = $password_err = $rol_err = "";
+
+   if($_SERVER['REQUEST_METHOD'] == "POST"){
+    //    Verifico los campos
+        if(empty(trim($_POST["nombre"]))){
+            $nombre_err = "Por favor, ingrese un nombre";
+        }else{
+            $nombre = $_POST["nombre"];
+        }
+
+        if(empty(trim($_POST["apellido"]))){
+            $apellido_err = "Por favor, ingrese el apellido";
+        }else{
+            $cedula = $_POST["apellido"];
+        }
+
+        if(empty(trim($_POST["correo"]))){
+            $correo_err = "Por favor, ingrese el correo";
+        }else{
+            $correo = $_POST["correo"];
+        }
+
+        if(empty(trim($_POST["password"]))){
+            $password_err = "Por favor, ingrese la contraseña";
+        }else{
+            $password = $_POST["password"];
+        }
+
+        if(empty(trim($_POST["rol"]))){
+            $rol_err = "Por favor, seleccione un rol";
+        }else if($_POST["rol"] == 'Seleccionar'){
+            $rol_err = "Por favor, seleccione un rol";
+        }else{
+            $rol = $_POST["rol"];
+        }
+   }
+
+
+   //Verifico que haya ingresado un correo
+    if(empty(trim($_POST["correo"]))){
+    $correo_err = "Por favor, ingrese su correo";
+    }else{
+    // Preparamos un SELECT
+    $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
+    
+    if($stmt = $pdo->prepare($sql)){
+        // Amarramos las variables al prepared statement como parámetros
+        $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
+        
+        // Establecemos los parámetros
+        $param_correo = trim($_POST["correo"]);
+        
+        // Ejecutamos el prepared statement
+        if($stmt->execute()){
+            
+            if($stmt->rowCount() == 1){
+                $correo_err = "Este correo ya se encuentra registrado";
+            }else{
+                $correo = trim($_POST["correo"]);
+            }
+        }else{
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        // Cerramos el statement
+        unset($stmt);
+    }
+}
+
+    //Verifico que haya ingresado una contraseña
+    if(empty(trim($_POST["pass"]))){
+        $password_err = "Por favor, ingrese su contraseña";
+    }elseif(strlen(trim($_POST["pass"])) < 6){
+        $password_err = "La contraseña debe contener más de 6 caracteres";
+    }else{
+        //$pass = $_POST['pass'];
+    }
+
+
+    if(empty($correo_err) && empty($password_err) && empty($nombre_err) && empty($apellido_err) && empty($rol_err))
+    {
+
+        //Guardar en la base
+        $sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, 1, :pass)";
+
+        if($stmt = $pdo->prepare($sql)){
+            $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+            $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
+            $stmt->bindParam(":correo",$param_username, PDO::PARAM_STR);
+            // $stmt->bindParam('Usuario',$param_tipo, PDO::PARAM_STR);
+            $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
+
+            //Establecemos los parametros
+            $param_nombre = $nombre;
+            $param_apellido = $apellido;
+            $param_username = $correo;
+            // $param_tipo = $tipo;
+            $param_password = password_hash($pass, PASSWORD_DEFAULT);
+
+            //Ejecutamos el procedimiento 
+
+            if($stmt->execute()){
+                header("Location: login.php");
+            }else{
+            $login_err = "Algo salió mal";
+        }
+        //Close statement
+        unset($stmt);
+    }
+
+}
+//Cierra la conexion
+unset($pdo);
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +147,14 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <script>
+        function rolSelection(){
+            var d = document.getElementById("inputRol");
+            var displayText = d.options[d.selectedIndex].text;
+            document.getElementById("rol").value = displayText;
+        }
+    </script>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -48,79 +172,72 @@
                     include 'navbar-top.php'
                 ?>
                 <!-- MAIN CONTAINER -->
-
-        <!-- Empieza cambio -->
                 <div class="container">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Registro de empleados</h1>
-                            </div>
-                            <form class="user">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Nombre">
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Correo electrónico">
-                                    </div>
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Teléfono">
-                                    </div>
+                     <!-- Page Heading -->
+                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Empleados</h1>
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Registro de Empleados</h6>
                                 </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Cédula">
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Usuario">
-                                    </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Contraseña">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Estado">
-                                    </div>
+                                <div class="card-body">
+                                    <form action="" method="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Nombre</label>
+                                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
+                                                <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Apellido</label>
+                                                <input type="text" name="apellido" id="apellido" placeholder="Correo electrónico" class="form-control <?php echo (!empty($apellido_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $apellido; ?>">
+                                                <span class="invalid-feedback"><?php echo $apellido_err; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Correo electrónico</label>
+                                                <input type="text" name="correo" id="correo" placeholder="Correo electrónico" class="form-control <?php echo (!empty($correo_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $correo; ?>">
+                                                <span class="invalid-feedback"><?php echo $correo_err; ?></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="nombre">Contraseña</label>
+                                                <input type="password" name="password" id="password" placeholder="Contraseña" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                                                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                                <label for="inputRol">Rol</label>
+                                                <select id="inputRol" onchange="rolSelection();" class="form-control">
+                                                    <option>Seleccionar</option>
+                                                    <option>Empleado</option>
+                                                    <option>Administrador</option>
+                                                </select>
+                                                <input type="text" class="form-control <?php echo (!empty($rol_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $rol; ?>" name="rol" id="rol" required hidden>
+                                                <span class="invalid-feedback"><?php echo $rol_err; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group-col md-6">
+                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                <button type="reset" class="btn btn-secondary">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <a href="#" class="btn btn-primary btn-user btn-block">
-                                    Guardar
-                                </a>
-                                <a href="#" class="btn btn-primary btn-user btn-block">
-                                    Cancelar
-                                </a>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+        
 
-    </div>
+                </div>
     <!-- Termina cambio -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Empleados</h1>
-                    </div>
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
