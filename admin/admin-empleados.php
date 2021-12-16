@@ -9,7 +9,7 @@
    require_once "../config.php";
 
    $nombre = $apellido = $correo = $password = $rol = "";
-   $nombre_err = $apellido_err = $correo_err = $password_err = $rol_err = "";
+   $nombre_err = $apellido_err = $correo_err = $password_err = $rol_err = $admin_empleados_err = "";
 
    if($_SERVER['REQUEST_METHOD'] == "POST"){
     //    Verifico los campos
@@ -23,18 +23,6 @@
             $apellido_err = "Por favor, ingrese el apellido";
         }else{
             $apellido = $_POST["apellido"];
-        }
-
-        if(empty(trim($_POST["correo"]))){
-            $correo_err = "Por favor, ingrese el correo";
-        }else{
-            $correo = $_POST["correo"];
-        }
-
-        if(empty(trim($_POST["password"]))){
-            $password_err = "Por favor, ingrese la contraseña";
-        }else{
-            $password = $_POST["password"];
         }
 
         if(empty(trim($_POST["rol"]))){
@@ -112,7 +100,7 @@
                 if($stmt->execute()){
                     header("Location: admin-empleados.php");
                 }else{
-                $login_err = "Algo salió mal";
+                $admin_empleados_err = "Algo salió mal";
             }
             //Close statement
             unset($stmt);
@@ -168,6 +156,11 @@
                      <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Empleados</h1>
                     </div>
+                    <?php 
+                    if(!empty($admin_empleados_err)){
+                        echo '<div class="alert alert-danger">' . $admin_empleados_err . '</div>';
+                    }        
+                    ?>
                     <!-- Content Row -->
                     <div class="row">
                         <div class="col-xl-9 col-lg-7">
@@ -176,11 +169,16 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Registro de Empleados</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post">
-                                        <div class="form-row">
+                                <form class="form" id="registroempleados" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                <?php 
+                                if(!empty($admin_empleados_err)){
+                                    echo '<div class="alert alert-danger">' . $admin_empleados_err . '</div>';
+                                }        
+                                ?>    
+                                    <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Nombre</label>
-                                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
+                                                <input type="text" name="nombre" id="nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
                                                 <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
                                             </div>
                                             <div class="form-group col-md-6">
