@@ -190,7 +190,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="tablaProducto" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>ProductoId</th>
@@ -198,6 +198,7 @@
                                             <th>Cantidad</th>
                                             <th>Precio</th>
                                             <th>Imagen</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -207,6 +208,7 @@
                                             <th>Cantidad</th>
                                             <th>Precio</th>
                                             <th>Imagen</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -263,7 +265,7 @@
     <!-- Page level custom scripts -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#example').DataTable( {
+            $('#tablaProducto').DataTable( {
                 "ajax" : {
                     "url" : "get_datap.php",
                     "dataSrc" : ""
@@ -273,7 +275,8 @@
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
                     {"data" : "precio"},
-                    {"data" : "imagen"}
+                    {"data" : "imagen"},
+                    {"defaultContent" : "<button class='btn btn-primary'>Editar</button> <button class='btn btn-danger'>Deshabilitar</button>"}
                 ]
             } );
         } );
