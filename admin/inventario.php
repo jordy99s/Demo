@@ -63,7 +63,7 @@
 
         if(empty($nombre_err) && empty($precio_err) && empty($cantidad_err)){
             // Hacemos una consulta
-            $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen) VALUES (:nombre, :cantidad, :precio, :imagen)";
+            $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen, estado) VALUES (:nombre, :cantidad, :precio, :imagen, 'Habilitado')";
 
             if($stmt = $pdo -> prepare($sql)){
                 $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
@@ -112,6 +112,7 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://markcell.github.io/jquery-tabledit/assets/js/tabledit.min.js"></script>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -169,7 +170,7 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="Precio">Precio</label>
-                                                <input type="text" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>" onkeypress="validate();">
+                                                <input type="number" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>" step=".01">
                                                 <span class="invalid-feedback"><?php echo $precio_err; ?></span>
                                             </div>
                                         </div>
@@ -193,21 +194,19 @@
                                 <table class="table table-bordered" id="tablaProducto" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ProductoId</th>
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
-                                            <th>Imagen</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ProductoId</th>
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
-                                            <th>Imagen</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </tfoot>
@@ -228,7 +227,27 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
+    <!-- DESHABILITAR MODAL -->
+    <form action="" method="post">
+        <div class="modal fade" id="modalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Deshabilitar</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">¿Estás seguro que deseas deshabilitar este producto?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" href="desh.php">Deshabilitar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -263,30 +282,53 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
+
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#tablaProducto').DataTable( {
+           var table = $('#tablaProducto').DataTable( {
                 "ajax" : {
                     "url" : "get_datap.php",
                     "dataSrc" : ""
                 },
                 "columns" : [
-                    {"data" : "ProductoId"},
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
                     {"data" : "precio"},
-                    {"data" : "imagen"},
-                    {"defaultContent" : "<button class='btn btn-primary'>Editar</button> <button class='btn btn-danger'>Deshabilitar</button>"}
-                ]
+                    {"data" : "estado"},
+                    {"defaultContent" : "<button class='editar btn btn-primary'>Editar</button> <button class='deshabilitar btn btn-danger' data-toggle='modal' data-target='#modalDeshabilitar'>Deshabilitar</button>"}
+                ],
+                "language" : idioma_espanol
             } );
+            $("#tablaProducto tbody").on("click", ".editar", function(){
+                var data = table.row($(this).parents("tr")).data();
+                console.log(data);
+            });
         } );
-    </script>
-    <script>
-        function validate(s) {
-            var rgx = /^[0-9]*\.?[0-9]*$/;
-            return s.match(rgx);
-        }
-    </script>
 
+        var idioma_espanol = {
+		    "sProcessing":     "Procesando...",
+		    "sLengthMenu":     "Mostrar _MENU_ registros",
+		    "sZeroRecords":    "No se encontraron resultados",
+		    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		    "sInfoPostFix":    "",
+		    "sSearch":         "Buscar:",
+		    "sUrl":            "",
+		    "sInfoThousands":  ",",
+		    "sLoadingRecords": "Cargando...",
+		    "oPaginate": {
+		        "sFirst":    "Primero",
+		        "sLast":     "Último",
+		        "sNext":     "Siguiente",
+		        "sPrevious": "Anterior"
+		    },
+		    "oAria": {
+		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		    }
+		}
+    </script>
 </body>
 </html>
