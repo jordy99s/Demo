@@ -176,24 +176,24 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Nombre</label>
-                                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
+                                                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>" required>
                                                 <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Apellido</label>
-                                                <input type="text" name="apellido" id="apellido" placeholder="Apellido" class="form-control <?php echo (!empty($apellido_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $apellido; ?>">
+                                                <input type="text" name="apellido" id="apellido" placeholder="Apellido" class="form-control <?php echo (!empty($apellido_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $apellido; ?>" required>
                                                 <span class="invalid-feedback"><?php echo $apellido_err; ?></span>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Correo electrónico</label>
-                                                <input type="text" name="correo" id="correo" placeholder="Correo electrónico" class="form-control <?php echo (!empty($correo_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $correo; ?>">
+                                                <input type="email" name="correo" id="correo" placeholder="Correo electrónico" class="form-control <?php echo (!empty($correo_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $correo; ?>" required>
                                                 <span class="invalid-feedback"><?php echo $correo_err; ?></span>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="nombre">Contraseña</label>
-                                                <input type="password" name="password" id="password" placeholder="Contraseña" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                                                <input type="password" name="password" id="password" placeholder="Contraseña" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>" required>
                                                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
                                             </div>
                                         </div>
