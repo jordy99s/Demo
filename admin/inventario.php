@@ -9,38 +9,16 @@
 
    require_once "../config.php";
 
-   $nombre = $cantidad = $precio = $imagen = $productoId = "";
-   $nombre_err = $cantidad_err = $precio_err = $imagen_err = $insert_err = "";
+   $nombre = $cantidad = $precio = $imagen = $ProductoId = "";
+   $nombre_err = $cantidad_err = $precio_err = $imagen_err = $ProductoId_err = $insert_err = "";
 
    if($_SERVER['REQUEST_METHOD'] == "POST"){
     //    Verifico los campos
+
         if(empty(trim($_POST["nombre"]))){
             $nombre_err = "Por favor, ingrese un nombre";
         }else{
-            $sql = "SELECT ProductoId FROM Producto WHERE nombre = :nombre";
-            
-            if($stmt = $pdo->prepare($sql)){
-                // Amarramos las variables al prepared statement como parámetros
-                $stmt->bindParam(":nombre", $param_username, PDO::PARAM_STR);
-                
-                // Establecemos los parámetros
-                $param_nombre = trim($_POST["nombre"]);
-                
-                // Ejecutamos el prepared statement
-                if($stmt->execute()){
-                    
-                    if($stmt->rowCount() == 1){
-                        $nombre_err = "Este producto ya se encuentra registrado";
-                    }else{
-                        $nombre = trim($_POST["nombre"]);
-                    }
-                }else{
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
-
-                // Cerramos el statement
-                unset($stmt);
-            }
+            $nombre = trim($_POST["nombre"]);
         }
 
         if(empty(trim($_POST["cantidad"]))){
@@ -63,26 +41,64 @@
 
         if(empty($nombre_err) && empty($precio_err) && empty($cantidad_err)){
             // Hacemos una consulta
-            $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen, estado) VALUES (:nombre, :cantidad, :precio, :imagen, 'Habilitado')";
+            $sql = "SELECT ProductoId FROM Producto WHERE ProductoId  = :ProductoId";
 
-            if($stmt = $pdo -> prepare($sql)){
-                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
-                $stmt->bindParam(":cantidad", $param_cantidad, PDO::PARAM_STR);
-                $stmt->bindParam(":precio", $param_precio, PDO::PARAM_STR);
-                $stmt->bindParam(":imagen", $param_imagen, PDO::PARAM_STR);
+            if($stmt = $pdo->prepare($sql)){
 
-                $param_nombre = $nombre;
-                $param_cantidad = $cantidad;
-                $param_precio = $precio;
-                $param_imagen = $imagen;
+                $stmt->bindParam(":ProductoId", $param_ProductoId, PDO::PARAM_STR);
+                $param_ProductoId = trim($_POST["ProductoId"]);
 
-                if($stmt -> execute()){
-                    header("Location: inventario.php");
-                }else{
-                    $insert_err = "Algo salió mal";
+                if($stmt->execute()){
+                    if($stmt->rowCount() == 1){
+
+                        $sql = "UPDATE Producto SET nombre = :nombre, cantidad = :cantidad, precio = :precio WHERE ProductoId = :ProductoId";
+
+                        if($stmt = $pdo -> prepare($sql)){
+
+                            
+                            $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                            $stmt->bindParam(":cantidad", $param_cantidad, PDO::PARAM_STR);
+                            $stmt->bindParam(":precio", $param_precio, PDO::PARAM_STR);
+                            $stmt->bindParam(":ProductoId", $param_ProductoId, PDO::PARAM_STR);
+                            
+                            
+                            $param_nombre = $nombre;
+                            $param_cantidad = $cantidad;
+                            $param_precio = $precio;
+                            $param_ProductoId = $ProductoId;
+
+                            if($stmt -> execute()){
+                                header("Location: inventario.php");
+                            }else{
+                                $insert_err = "Algo salió mal";
+                            }
+                            unset($stmt);
+                        }
+                    }else{
+                        $sql = "INSERT INTO Producto (nombre, cantidad, precio, imagen, estado) VALUES (:nombre, :cantidad, :precio, :imagen, 'Habilitado')";
+
+                        if($stmt = $pdo -> prepare($sql)){
+                            $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                            $stmt->bindParam(":cantidad", $param_cantidad, PDO::PARAM_STR);
+                            $stmt->bindParam(":precio", $param_precio, PDO::PARAM_STR);
+                            $stmt->bindParam(":imagen", $param_imagen, PDO::PARAM_STR);
+
+                            $param_nombre = $nombre;
+                            $param_cantidad = $cantidad;
+                            $param_precio = $precio;
+                            $param_imagen = $imagen;
+
+                            if($stmt -> execute()){
+                                header("Location: inventario.php");
+                            }else{
+                                $insert_err = "Algo salió mal";
+                            }
+                            unset($stmt);
+                        }
+                    }
                 }
-                unset($stmt);
             }
+            
         }
 
         unset($pdo);
@@ -153,7 +169,7 @@
                                         ?>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" name="ProductoId" id="ProductoId" hidden>
+                                                <input hidden type="text" name="ProductoId" id="ProductoId" value="<?php echo $ProductoId; ?>" class="form-control <?php echo (!empty($ProductoId_err)) ? 'is-invalid' : ''; ?>">
                                                 <label for="nombre">Nombre del Producto</label>
                                                 <input type="text" name="nombre" id="nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
                                                 <span class="invalid-feedback"><?php echo $nombre_err; ?></span>

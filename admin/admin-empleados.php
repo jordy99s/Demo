@@ -38,30 +38,7 @@
             $correo_err = "Por favor, ingrese su correo";
         }else{
             // Preparamos un SELECT
-            $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
-        
-            if($stmt = $pdo->prepare($sql)){
-                // Amarramos las variables al prepared statement como parámetros
-                $stmt->bindParam(":correo", $param_correo, PDO::PARAM_STR);
-            
-                // Establecemos los parámetros
-                $param_correo = trim($_POST["correo"]);
-            
-                // Ejecutamos el prepared statement
-                if($stmt->execute()){
-                
-                    if($stmt->rowCount() == 1){
-                        $correo_err = "Este correo ya se encuentra registrado";
-                    }else{
-                        $correo = trim($_POST["correo"]);
-                    }
-                }else{
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
-    
-                // Cerramos el statement
-                unset($stmt);
-            }
+            $correo = trim($_POST["correo"]);
         }
     
         //Verifico que haya ingresado una contraseña
@@ -72,39 +49,71 @@
         }else{
             $pass = $_POST['password'];
         }
+        
     
-    
-        if(empty($correo_err) && empty($password_err) && empty($nombre_err) && empty($apellido_err) && empty($rol_err))
+        if(empty($correo_err) && empty($nombre_err) && empty($apellido_err) && empty($rol_err))
         {
-            //Guardar en la base
-            $sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, :rol, :pass)";
-    
+            $sql = "SELECT UserId FROM Usuarios WHERE correo = :correo";
             if($stmt = $pdo->prepare($sql)){
-                $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
-                $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
-                $stmt->bindParam(":correo",$param_correo, PDO::PARAM_STR);
-                $stmt->bindParam(":rol",$param_rol, PDO::PARAM_STR);
-                $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
-    
-                //Establecemos los parametros
-                $param_nombre = $nombre;
-                $param_apellido = $apellido;
-                $param_correo = $correo;
-                $param_rol = $rol;
-                $param_password = password_hash($pass, PASSWORD_DEFAULT);
-    
-                //Ejecutamos el procedimiento 
-    
-                if($stmt->execute()){
-                    header("Location: admin-empleados.php");
+                if($stmt -> rowCount() == 1){
+                    $sql = "UPDATE Usuarios SET nombre = :nombre, apellido = :apellido, rol = :rol WHERE correo=:correo";
+            
+                    if($stmt = $pdo->prepare($sql)){
+                        $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                        $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
+                        $stmt->bindParam(":correo",$param_correo, PDO::PARAM_STR);
+                        $stmt->bindParam(":rol",$param_rol, PDO::PARAM_STR);
+                        $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
+            
+                        //Establecemos los parametros
+                        $param_nombre = $nombre;
+                        $param_apellido = $apellido;
+                        $param_correo = $correo;
+                        $param_rol = $rol;
+            
+                        //Ejecutamos el procedimiento 
+            
+                        if($stmt->execute()){
+                            header("Location: admin-empleados.php");
+                        }else{
+                            $admin_empleados_err = "Algo salió mal";
+                        }
+                        //Close statement
+                        unset($stmt);
+                    }
                 }else{
-                $admin_empleados_err = "Algo salió mal";
+                         //Guardar en la base
+                    $sql = "INSERT INTO Usuarios (nombre, apellido, correo, rol, pass) VALUES (:nombre, :apellido, :correo, :rol, :pass)";
+            
+                    if($stmt = $pdo->prepare($sql)){
+                        $stmt->bindParam(":nombre", $param_nombre, PDO::PARAM_STR);
+                        $stmt->bindParam(":apellido",$param_apellido, PDO::PARAM_STR);
+                        $stmt->bindParam(":correo",$param_correo, PDO::PARAM_STR);
+                        $stmt->bindParam(":rol",$param_rol, PDO::PARAM_STR);
+                        $stmt->bindParam(":pass",$param_password, PDO::PARAM_STR);
+            
+                        //Establecemos los parametros
+                        $param_nombre = $nombre;
+                        $param_apellido = $apellido;
+                        $param_correo = $correo;
+                        $param_rol = $rol;
+                        $param_password = password_hash($pass, PASSWORD_DEFAULT);
+            
+                        //Ejecutamos el procedimiento 
+            
+                        if($stmt->execute()){
+                            header("Location: admin-empleados.php");
+                        }else{
+                            $admin_empleados_err = "Algo salió mal";
+                        }
+                        //Close statement
+                        unset($stmt);
+                    }
+                }
             }
-            //Close statement
-            unset($stmt);
-        }
+            
     
-    }
+        }
     //Cierra la conexion
     unset($pdo);
     }
@@ -237,6 +246,7 @@
                                             <th>Apellido</th>
                                             <th>Correo</th>
                                             <th>Rol</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -245,6 +255,7 @@
                                             <th>Apellido</th>
                                             <th>Correo</th>
                                             <th>Rol</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -262,6 +273,30 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- DESHABILITAR MODAL -->
+    <form action="" method="POST" id="Deshabilitar">
+        <input type="text" name="ProductoId" id="ProductoId" hidden>
+        <input type="hidden" id="opcion" name="opcion" value="eliminar">
+        <div class="modal fade" id="modalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Deshabilitar</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">¿Estás seguro que deseas deshabilitar este producto?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" id="deshabilitar-producto" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" href="">Deshabilitar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -299,7 +334,7 @@
     <!-- Page level custom scripts -->
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#example').DataTable( {
+           var table = $('#example').DataTable( {
                 "ajax" : {
                     "url" : "get_data.php",
                     "dataSrc" : ""
@@ -308,10 +343,48 @@
                     {"data" : "nombre"},
                     {"data" : "apellido"},
                     {"data" : "correo"},
-                    {"data" : "rol"}
-                ]
+                    {"data" : "rol"},
+                    {"defaultContent" : "<button class='editar btn btn-primary'>Editar</button> <button class='deshabilitar btn btn-danger' data-toggle='modal' data-target='#modalDeshabilitar'>Deshabilitar</button>"}
+                ],
+                "language" : idioma_espanol
             } );
+            $("#example tbody").on("click", ".editar", function(){
+                var data = table.row($(this).parents("tr")).data();
+                var  nombre = $("#nombre").val(data.nombre),
+                    apellido = $("#apellido").val(data.apellido),
+                    correo = $("#correo").val(data.correo),
+                    rol = $("#rol").val(data.rol);
+                    
+            });
+            $("#example tbody").on("click", ".deshabilitar", function(){
+                var data = table.row($(this).parents("tr")).data();
+            });
         } );
+
+        var idioma_espanol = {
+		    "sProcessing":     "Procesando...",
+		    "sLengthMenu":     "Mostrar _MENU_ registros",
+		    "sZeroRecords":    "No se encontraron resultados",
+		    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+		    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		    "sInfoPostFix":    "",
+		    "sSearch":         "Buscar:",
+		    "sUrl":            "",
+		    "sInfoThousands":  ",",
+		    "sLoadingRecords": "Cargando...",
+		    "oPaginate": {
+		        "sFirst":    "Primero",
+		        "sLast":     "Último",
+		        "sNext":     "Siguiente",
+		        "sPrevious": "Anterior"
+		    },
+		    "oAria": {
+		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		    }
+		}
     </script>
     <script>
         function rolSelection(){
