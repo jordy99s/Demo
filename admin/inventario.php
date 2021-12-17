@@ -9,7 +9,7 @@
 
    require_once "../config.php";
 
-   $nombre = $cantidad = $precio = $imagen = "";
+   $nombre = $cantidad = $precio = $imagen = $productoId = "";
    $nombre_err = $cantidad_err = $precio_err = $imagen_err = $insert_err = "";
 
    if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -112,6 +112,7 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://markcell.github.io/jquery-tabledit/assets/js/tabledit.min.js"></script>
 </head>
 <body id="page-top">
@@ -152,6 +153,7 @@
                                         ?>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
+                                                <input type="text" name="ProductoId" id="ProductoId" hidden>
                                                 <label for="nombre">Nombre del Producto</label>
                                                 <input type="text" name="nombre" id="nombre" class="form-control <?php echo (!empty($nombre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $nombre; ?>">
                                                 <span class="invalid-feedback"><?php echo $nombre_err; ?></span>
@@ -172,11 +174,12 @@
                                                 <label for="Precio">Precio</label>
                                                 <input type="number" name="precio" id="precio" class="form-control <?php echo (!empty($precio_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $precio; ?>" step=".01">
                                                 <span class="invalid-feedback"><?php echo $precio_err; ?></span>
+                                                <input type="text" name="estado" id="estado" hidden>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group-col md-6">
-                                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                                <button type="submit" class="btn btn-primary" value="Guardar">Guardar</button>
                                                 <button type="reset" class="btn btn-secondary">Cancelar</button>
                                             </div>
                                         </div>
@@ -194,6 +197,7 @@
                                 <table class="table table-bordered" id="tablaProducto" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>ProductoId</th>
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Precio</th>
@@ -201,15 +205,7 @@
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </tfoot>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
@@ -228,7 +224,9 @@
         <i class="fas fa-angle-up"></i>
     </a>
     <!-- DESHABILITAR MODAL -->
-    <form action="" method="post">
+    <form action="" method="POST" id="Deshabilitar">
+        <input type="text" name="ProductoId" id="ProductoId" hidden>
+        <input type="hidden" id="opcion" name="opcion" value="eliminar">
         <div class="modal fade" id="modalDeshabilitar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -241,8 +239,8 @@
                     </div>
                     <div class="modal-body">¿Estás seguro que deseas deshabilitar este producto?</div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-danger" href="desh.php">Deshabilitar</a>
+                        <button class="btn btn-primary" type="button" id="deshabilitar-producto" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" href="">Deshabilitar</a>
                     </div>
                 </div>
             </div>
@@ -291,6 +289,7 @@
                     "dataSrc" : ""
                 },
                 "columns" : [
+                    {"data" : "ProductoId"},
                     {"data" : "nombre"},
                     {"data" : "cantidad"},
                     {"data" : "precio"},
@@ -301,7 +300,16 @@
             } );
             $("#tablaProducto tbody").on("click", ".editar", function(){
                 var data = table.row($(this).parents("tr")).data();
-                console.log(data);
+                var ProductoId = $("#ProductoId").val(data.ProductoId),
+                    nombre = $("#nombre").val(data.nombre),
+                    cantidad = $("#cantidad").val(data.cantidad),
+                    precio = $("#precio").val(data.precio),
+                    estado = $("#estado").val(data.estado);
+                    
+            });
+            $("#tablaProducto tbody").on("click", ".deshabilitar", function(){
+                var data = table.row($(this).parents("tr")).data();
+                var ProductoId = $("#Deshabilitar #ProductoId").val(data.ProductoId);
             });
         } );
 
